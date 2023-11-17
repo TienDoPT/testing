@@ -2,11 +2,17 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { setupStore } from '../redux/store'
+import { userInfo } from './mock-data'
 
 export function renderWithProviders(
   ui,
   {
-    preloadedState = {},
+    preloadedState = {
+      auth: {
+        isLogin: true,
+        userInfo
+      }
+    },
     store = setupStore(preloadedState),
     ...renderOptions
   } = {}

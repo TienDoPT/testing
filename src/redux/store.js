@@ -1,11 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import authReducer from '../redux/authSlice'
-export const store = configureStore({
-    reducer: { auth: authReducer },
-})
 
 const rootReducer = combineReducers({
     auth: authReducer
+})
+
+export const store = configureStore({
+    reducer: rootReducer,
 })
 
 export const setupStore = preloadedState => {

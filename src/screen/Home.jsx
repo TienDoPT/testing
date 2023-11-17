@@ -10,6 +10,7 @@ const Home = () => {
     const [cart, setCart] = useState([]);
     const [purchaseSuccess, setPurchaseSuccess] = useState(false)
     useEffect(() => {
+        const controller = new AbortController();
         const fetchData = async () => {
             try {
                 const response = await axios.get('https://dummyjson.com/products/');
@@ -20,6 +21,9 @@ const Home = () => {
         };
 
         fetchData();
+        return () => {
+            controller.abort();
+        };
     }, []);
 
     const total = useMemo(() => {
@@ -36,9 +40,9 @@ const Home = () => {
                 <div style={{ margin: 20 }}>
                     <h2>Product List</h2>
                     <div style={{ display: 'flex', flexDirection: 'row', overflowX: 'scroll' }}>
-                        {products.map(product => (
-                            <div key={product.id} style={{ margin: 20 }}>
-                                <img src={product?.thumbnail} height="260" width="260"  alt={'#'}/>
+                        {products?.map(product => (
+                            <div key={product.id} style={{ margin: 20 }} aria-label='listProduct'>
+                                <img src={product?.thumbnail} height="260" width="260" alt={'#'} />
                                 <div>Title: {product?.title}</div>
                                 <div>Price: {product?.price}$</div>
                                 <div
@@ -63,10 +67,10 @@ const Home = () => {
                             ><h2>Buy now</h2></button>
                         </div>
                         {
-                            cart.length !== 0 && <div style={{ display: 'flex', flexDirection: 'row', overflowX: 'scroll' }}>
-                                {cart.map(product => (
-                                    <div key={product.id} style={{ margin: 20 }}>
-                                        <img src={product?.thumbnail} height="260" width="260" alt={'#'}/>
+                            cart?.length !== 0 && <div style={{ display: 'flex', flexDirection: 'row', overflowX: 'scroll' }}>
+                                {cart?.map(product => (
+                                    <div key={product.id} style={{ margin: 20 }} aria-label='listCart'>
+                                        <img src={product?.thumbnail} height="260" width="260" alt={'#'} />
                                         <div>Title: {product?.title}</div>
                                         <div>Price: {product?.price}$</div>
                                         <div
@@ -81,7 +85,7 @@ const Home = () => {
                 </div>
             </div>
                 : <div style={{ alignItems: 'center', justifyContent: 'center', display: 'flex', height: '100vh', width: '100vw' }}>
-                    <div style={{textAlign:'center'}}>
+                    <div style={{ textAlign: 'center' }}>
                         <h1>Purchase success!</h1>
                         <h1 onClick={() => setPurchaseSuccess(false)}>Comeback to shopping</h1>
                     </div>

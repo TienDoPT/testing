@@ -1,18 +1,10 @@
 import { rest } from "msw";
+import { userInfo } from "../test-util/mock-data";
 
 export const handlers = [
   rest.post("https://dummyjson.com/auth/login", (req, res, ctx) => {
     return res(
-      ctx.json({
-        "id": 15,
-        "username": "kminchelle",
-        "email": "kminchelle@qq.com",
-        "firstName": "Jeanne",
-        "lastName": "Halvorson",
-        "gender": "female",
-        "image": "https://robohash.org/autquiaut.png",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInVzZXJuYW1lIjoia21pbmNoZWxsZSIsImVtYWlsIjoia21pbmNoZWxsZUBxcS5jb20iLCJmaXJzdE5hbWUiOiJKZWFubmUiLCJsYXN0TmFtZSI6IkhhbHZvcnNvbiIsImdlbmRlciI6ImZlbWFsZSIsImltYWdlIjoiaHR0cHM6Ly9yb2JvaGFzaC5vcmcvYXV0cXVpYXV0LnBuZyIsImlhdCI6MTcwMDE1OTM5NywiZXhwIjoxNzAwMTYyOTk3fQ.dPsZ73_8Up-hLXA26-1yn5ap8sRUTQdJGddDpv7NoXs"
-      })
+      ctx.json(userInfo)
     );
   }),
   rest.get('https://dummyjson.com/products/', (req, res, ctx) => {
